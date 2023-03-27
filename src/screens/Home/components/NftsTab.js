@@ -18,39 +18,48 @@ const NftsTab = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const nfts = await alchemy.nft.getNftsForOwner(account?.address);
+        const nfts = await alchemy.nft.getNftsForOwner(account.address);
         // console.log("NFTS", nfts);
         setNfts(nfts.ownedNfts);
       } catch (error) {
         console.log(error);
       }
     };
-    if (account?.address) {
+    if (account.address) {
       getData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account?.address, currentNetwork?.chain]);
+  }, [account.address, currentNetwork.chain]);
 
   return (
     <>
       <div className="">
-        {nfts?.length > 0 ? (
+        {" "}
+        {nfts.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 max-h-[400px] overflow-y-auto">
+            {" "}
             {nfts.map((asset, i) => {
               return (
                 <React.Fragment key={i}>
-                  <Nfts token={asset} />
+                  <Nfts token={asset} />{" "}
                 </React.Fragment>
               );
               // console.log(asset);
-            })}
+            })}{" "}
           </div>
         ) : (
-          <div className="flex justify-center items-center">
-            <p>Not Found</p>
+          // <div className="flex justify-center items-center">
+          //   <p>Not Found</p>
+          // </div>
+
+          <div class="flex flex-col items-center justify-center">
+            <p class="text-4xl font-bold text-gray-800 mb-4 animate-pulse">
+              {" "}
+              No NFTs Found{" "}
+            </p>{" "}
           </div>
-        )}
-      </div>
+        )}{" "}
+      </div>{" "}
     </>
   );
 };

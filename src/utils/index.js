@@ -50,4 +50,25 @@ export const NETWORKS = [
     chain: 10,
     explorer: "https://optimistic.etherscan.io",
   },
+  {
+    id: 6,
+    rpc: `https://arb-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`,
+    text: "Arbitrum Mainnet",
+    chain: 42161,
+    explorer: "https://arbiscan.io/",
+  },
+  {
+    id: 7,
+    rpc: `https://arb-goerli.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`,
+    text: "Arbitrum Testnet",
+    chain: 421613,
+    explorer: "https://testnet.arbiscan.io/",
+  },
+  {
+    id: 8,
+    rpc: `https://opt-kovan.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`,
+    text: "Optimism Kovan",
+    chain: 69,
+    explorer: "https://kovan-optimistic.etherscan.io",
+  },
 ];

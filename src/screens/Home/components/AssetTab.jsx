@@ -192,21 +192,20 @@ const AssetTab = () => {
           sendParams.recpAddr,
           (sendParams.amount * 10 ** isSend.tokDecimal).toString()
         );
-        console.log(send);
+        console.log(`Txn Hash:${send.hash}`);
         token.setIsLoader(false);
         // console.log(sendParams.amount * 10 ** isSend.tokDecimal);
       } catch (error) {
         console.log(`Error in sending tokens: ${error}`);
         token.setIsLoader(false);
       }
-      console.log(isSend.address);
     } catch (error) {
       console.log(`Error occured in main:${error}`);
       token.setIsLoader(false);
     }
   };
   const handleEvent = async () => {
-    console.log(isSend);
+    const data = await token.getMetaData();
   };
 
   return (
@@ -328,6 +327,9 @@ const AssetTab = () => {
             <button onClick={handleUpdate} className="text-sky-500 mt-5 ml-12">
               Refresh Token List{" "}
             </button>
+            {/* <button onClick={handleEvent} className="text-sky-500 mt-5 ml-12">
+              Get event
+            </button> */}
           </div>{" "}
           <p> Don 't see your tokens?</p>{" "}
           {isImportClick ? (

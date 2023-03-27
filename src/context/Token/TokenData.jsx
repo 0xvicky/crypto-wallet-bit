@@ -1,9 +1,7 @@
-import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import TokenContext from "./TokenContext";
 import UserContext from "../User/UserContext";
 import { Network, Alchemy } from "alchemy-sdk";
-// import { Network, Alchemy } from "alchemy-sdk";
 import { useSelector } from "react-redux";
 import ercABI from "../../utils/common";
 import { ethers } from "ethers";
@@ -39,10 +37,9 @@ const TokenData = (props) => {
           const balData = await contract.balanceOf(user.signerAddr);
           const bal = balData.toString() / 10 ** 18;
           setUserBal(bal);
-          // console.log(bal);
-          setIsLoader(false);
         } catch (error) {
           console.log(`Error occured ${error}`);
+          setIsLoader(false);
         }
       };
       getData();
@@ -50,52 +47,66 @@ const TokenData = (props) => {
       setInitialRenderBal(true);
     }
   }, [contractAddress]);
-
   //Token Metadata
   useEffect(() => {
     if (initialRenderDet) {
-      let settings;
-      const getTokenDet = () => {
-        if (currentNetwork.chain === 5) {
-          settings = {
-            apiKey: process.env.REACT_APP_ALCHEMYKEY,
-            network: Network.ETH_GOERLI, // Replace with your network.
-          };
-        } else if (currentNetwork.chain === 1) {
-          settings = {
-            apiKey: process.env.REACT_APP_ALCHEMYKEY,
-            network: Network.ETH_MAINNET, // Replace with your network.
-          };
-        } else if (currentNetwork.chain === 80001) {
-          settings = {
-            apiKey: process.env.REACT_APP_ALCHEMYKEY,
-            network: Network.MATIC_MUMBAI, // Replace with your network.
-          };
-        } else if (currentNetwork.chain === 137) {
-          settings = {
-            apiKey: process.env.REACT_APP_ALCHEMYKEY,
-            network: Network.MATIC_MAINNET, // Replace with your network.
-          };
-        } else if (currentNetwork.chain === 10) {
-          settings = {
-            apiKey: process.env.REACT_APP_ALCHEMYKEY,
-            network: Network.OPT_MAINNET, // Replace with your network.
-          };
-        }
-        const alchemy = new Alchemy(settings);
+      // let settings;
+      // const getTokenDet = () => {
+      //   // if (currentNetwork.chain === 5) {
+      //   //   settings = {
+      //   //     apiKey: process.env.REACT_APP_ALCHEMYKEY,
+      //   //     network: Network.ETH_GOERLI, // Replace with your network.
+      //   //   };
+      //   // } else if (currentNetwork.chain === 1) {
+      //   //   settings = {
+      //   //     apiKey: process.env.REACT_APP_ALCHEMYKEY,
+      //   //     network: Network.ETH_MAINNET, // Replace with your network.
+      //   //   };
+      //   // } else if (currentNetwork.chain === 80001) {
+      //   //   settings = {
+      //   //     apiKey: process.env.REACT_APP_ALCHEMYKEY,
+      //   //     network: Network.MATIC_MUMBAI, // Replace with your network.
+      //   //   };
+      //   // } else if (currentNetwork.chain === 137) {
+      //   //   settings = {
+      //   //     apiKey: process.env.REACT_APP_ALCHEMYKEY,
+      //   //     network: Network.MATIC_MAINNET, // Replace with your network.
+      //   //   };
+      //   // } else if (currentNetwork.chain === 10) {
+      //   //   settings = {
+      //   //     apiKey: process.env.REACT_APP_ALCHEMYKEY,
+      //   //     network: Network.OPT_MAINNET, // Replace with your network.
+      //   //   };
+      //   // }
+      //   // const alchemy = new Alchemy(settings);
+      //   // try {
+      //   //   const tokenAddress = contractAddress;
+      //   //   alchemy.core.getTokenMetadata(tokenAddress).then((res) => {
+      //   //     setSymbol(res.symbol);
+      //   //     setDecimal(res.decimals);
+      //   //     // console.log(res);
+      //   //   });
+      //   // } catch (error) {
+      //   //   console.log(`Error occured:${error}`);
+      //   // }
+      // };
+      // getTokenDet();
+      const getMetaData = async () => {
+        const contract = new ethers.Contract(
+          contractAddress,
+          ercABI,
+          user.currentSigner
+        );
         try {
-          const tokenAddress = contractAddress;
-          alchemy.core.getTokenMetadata(tokenAddress).then((res) => {
-            setSymbol(res.symbol);
-            setDecimal(res.decimals);
-            // console.log(res);
-          });
-        } catch (error) {
-          console.log(`Error occured:${error}`);
-        }
+          const getSymbol = await contract.symbol();
+          const getDecimal = await contract.decimals();
+          console.log(getSymbol, getDecimal);
+          setSymbol(getSymbol);
+          setDecimal(getDecimal);
+          setIsLoader(false);
+        } catch (error) {}
       };
-
-      getTokenDet();
+      getMetaData();
     } else {
       if (contractAddress !== "") {
         setInitialRenderDet(true);
