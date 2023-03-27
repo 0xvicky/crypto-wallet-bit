@@ -64,13 +64,13 @@ const Send = () => {
         <div className="mt-5 grid gap-4">
           <div className="relative mt-10">
             <div className="absolute top-1/2 gap-2 -translate-y-1/2 left-4 grid grid-flow-col justify-start  items-center">
-              {currentNetwork?.chain == 5 || currentNetwork?.chain === 1 ? (
+              {currentNetwork?.chain === 5 || currentNetwork?.chain === 1 || currentNetwork?.chain === 10|| currentNetwork?.chain === 69? (
                 <img src={ethereum} className="w-6" alt="" />
               ) : (
                 <img src={polygon} className="w-6" alt="" />
               )}
 
-              {currentNetwork?.chain === 5 || currentNetwork?.chain === 1 ? (
+              {currentNetwork?.chain === 5 || currentNetwork?.chain === 1 || currentNetwork?.chain === 10|| currentNetwork?.chain === 69? (
                 <p className="text-xl">Ethers</p>
               ) : (
                 <p className="text-xl">Matic</p>

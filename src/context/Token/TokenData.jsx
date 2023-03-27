@@ -32,6 +32,10 @@ const TokenData = (props) => {
           baseURL = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}`;
         } else if (currentNetwork.chain === 1) {
           baseURL = `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`;
+        }else if (currentNetwork.chain === 10) {
+          baseURL = `https://opt-mainnet.g.alchemy.com/v2/${apiKey}`;
+        }else if (currentNetwork.chain === 69) {
+          baseURL = `https://opt-kovan.g.alchemy.com/v2/${apiKey}`;
         }
   
 
