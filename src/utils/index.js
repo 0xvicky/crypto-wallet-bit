@@ -45,10 +45,10 @@ export const NETWORKS = [
   },
   {
     id: 5,
-    rpc: ` https://opt-mainnet.g.alchemy.com/v2${process.env.REACT_APP_ALCHEMYKEY}`,
+    rpc: ` https://opt-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`,
     text: "Optimism Mainnet",
     chain: 10,
-    explorer: "https://optimistic.etherscan.io",
+    explorer: "https://optimistic.etherscan.io/",
   },
   {
     id: 6,
@@ -66,9 +66,16 @@ export const NETWORKS = [
   },
   {
     id: 8,
-    rpc: `https://opt-kovan.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`,
-    text: "Optimism Kovan",
-    chain: 69,
-    explorer: "https://kovan-optimistic.etherscan.io",
+    rpc: `https://rpc.buildbear.io/Unlikely_Saesee_Tiin_1d3c2093`,
+    text: "Optimism Testnet",
+    chain: 8576,
+    explorer: "https://explorer.buildbear.io/Unlikely_Saesee_Tiin_1d3c2093",
+  },
+  {
+    id: 9,
+    rpc: `https://rpc.buildbear.io/Exact_Yarael_Poof_cc043bb5`,
+    text: "Arbitrum BuildBear ",
+    chain: 8586,
+    explorer: "https://explorer.buildbear.io/Exact_Yarael_Poof_cc043bb5",
   },
 ];

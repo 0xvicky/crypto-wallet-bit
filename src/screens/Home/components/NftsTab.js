@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { ALCHEMYKEY } from "../../../utils";
-// import { formatFromWei } from "../../../web3";
 import Nfts from "./Nfts";
 import { useSelector } from "react-redux";
 const { Network, Alchemy } = require("alchemy-sdk");
