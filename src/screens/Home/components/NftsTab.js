@@ -12,7 +12,7 @@ const NftsTab = () => {
     network=Network.ETH_GOERLI
   }
   if (currentNetwork.chain === 137) {
-    network = Network.MATIC_MUMBAI
+    network = Network.MATIC_MAINNET
   }
   if (currentNetwork.chain === 80001) {
     network =Network.MATIC_MUMBAI
@@ -26,11 +26,11 @@ const NftsTab = () => {
   if (currentNetwork.chain === 42161) {
     network =Network.ARBITRUM_MAINNET;
   }
-  if (currentNetwork.chain === 421613) {
-    network =Network.ARBITRUM_TESTNET;
+  if (currentNetwork.chain === 8586) {
+    network =Network.ARBITRUM_BUILDBEAR;
   }
-  if (currentNetwork.chain === 420) {
-    network =Network.OPT_GOERLI;
+  if (currentNetwork.chain === 8576) {
+    network =Network.OPT_BUILDBEAR;
   }
   
   const settings = {
