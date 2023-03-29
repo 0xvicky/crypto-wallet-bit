@@ -39,23 +39,40 @@ const AssetTab = () => {
 
   useEffect(() => {
     getAll().then((res) => {
+      //put a check that only those tokens should push in array whose chain id matches with currentNetwork
       setTokenArray([]);
       res.map((item) => {
-        setTokenArray((prev) => {
-          return [
-            ...prev,
-            {
-              symbol: item.tokenSymbol,
-              balance: item.tokenBal,
-              decimal: item.tokenDecimal,
-              tokenAddress: item.tokenAddress,
-            },
-          ];
-        });
+        if (item.tokenNetwork === currentNetwork.chain) {
+          setTokenArray((prev) => {
+            return [
+              ...prev,
+              {
+                symbol: item.tokenSymbol,
+                balance: item.tokenBal,
+                decimal: item.tokenDecimal,
+                tokenAddress: item.tokenAddress,
+              },
+            ];
+          });
+        }
       });
     });
   }, [isImportClick, updateChange]);
 
+  const handleEvent = async () => {
+    let networkToken = [];
+    let otherToken = [];
+    const res = await getAll();
+    res.map((item) => {
+      if (item.tokenNetwork === currentNetwork.chain) {
+        networkToken.push(item);
+      } else if (item.tokenNetwork !== currentNetwork.chain) {
+        otherToken.push(item);
+      }
+    });
+    console.log(networkToken);
+    console.log(otherToken);
+  };
   const handleImportClick = () => {
     setIsImportClick((prev) => {
       {
@@ -106,6 +123,7 @@ const AssetTab = () => {
         tokenSymbol: token.symbol,
         tokenDecimal: token.decimal,
         tokenBal: token.userBal,
+        tokenNetwork: currentNetwork.chain,
       });
       token.setSymbol("");
       token.setDecimal("");
@@ -116,13 +134,20 @@ const AssetTab = () => {
     }
   };
 
-  let store; //variable to store data
   const handleUpdate = async () => {
+    let networkToken = []; //Array to store current Network tokens
+    let otherToken = []; //Array to store all other tokens
     const res = await getAll();
-    store = res;
+    res.map((item) => {
+      if (item.tokenNetwork === currentNetwork.chain) {
+        networkToken.push(item);
+      } else if (item.tokenNetwork !== currentNetwork.chain) {
+        otherToken.push(item);
+      }
+    });
     try {
       const clearDB = await clear();
-      store.map(async (item) => {
+      networkToken.map(async (item) => {
         // console.log(item);
         const contract = new ethers.Contract(
           item.tokenAddress,
@@ -140,6 +165,7 @@ const AssetTab = () => {
                 tokenSymbol: item.tokenSymbol,
                 tokenDecimal: item.tokenDecimal,
                 tokenBal: item.tokenBal,
+                tokenNetwork: item.tokenNetwork,
               });
             } catch (error) {
               console.log(`Error occured when storing in DB:${error}`);
@@ -151,11 +177,26 @@ const AssetTab = () => {
           console.log(`Error occured:${error}`);
         }
       });
-      // setUpdateChange((prev) => {
-      //   return !prev;
-      // });
     } catch (error) {
       console.log(`Error occured:${error}`);
+    }
+    //To store all other tokens into DB
+    try {
+      otherToken.map((item) => {
+        try {
+          add({
+            tokenAddress: item.tokenAddress,
+            tokenSymbol: item.tokenSymbol,
+            tokenDecimal: item.tokenDecimal,
+            tokenBal: item.tokenBal,
+            tokenNetwork: item.tokenNetwork,
+          });
+        } catch (error) {
+          console.log(`Error occured on mapping item:${error}`);
+        }
+      });
+    } catch (error) {
+      console.log(`Error occured when adding other tokens:${error}`);
     }
   };
 
@@ -203,9 +244,6 @@ const AssetTab = () => {
       console.log(`Error occured in main:${error}`);
       token.setIsLoader(false);
     }
-  };
-  const handleEvent = async () => {
-    const data = await token.getMetaData();
   };
 
   return (

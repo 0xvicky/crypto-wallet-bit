@@ -45,6 +45,11 @@ export const DBConfig = {
           keypath: "tokenBal",
           options: { unique: false },
         },
+        {
+          name: "tokenNetwork",
+          keypath: "tokenNetwork",
+          options: { unique: false },
+        },
       ],
     },
   ],

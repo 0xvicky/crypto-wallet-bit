@@ -51,7 +51,8 @@ export const getUserBalance = async (account) => {
     }
     const provider = new ethers.providers.JsonRpcProvider(localProvider.rpc);
     let balance = await provider.getBalance(account);
-
+    console.log(balance);
+    console.log(ethers.utils.formatEther(balance));
     return ethers.utils.formatEther(balance);
   } catch (err) {
     console.log("error", err);

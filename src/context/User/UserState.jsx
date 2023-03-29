@@ -39,9 +39,13 @@ const UserState = (props) => {
         provider = new ethers.providers.JsonRpcProvider(
           `https://arb-goerli.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMYKEY}`
         );
-      } else if (currentNetwork.chain === 420) {
+      } else if (currentNetwork.chain === 8576) {
         provider = new ethers.providers.JsonRpcProvider(
-          `https://goerli.optimism.io`
+          `https://rpc.buildbear.io/Unlikely_Saesee_Tiin_1d3c2093`
+        );
+      } else if (currentNetwork.chain === 8586) {
+        provider = new ethers.providers.JsonRpcProvider(
+          `https://rpc.buildbear.io/Exact_Yarael_Poof_cc043bb5`
         );
       }
 
